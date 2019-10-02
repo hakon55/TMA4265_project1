@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
+# Task 1 d)
 def simulate_timesteps():
     beta = 0.05
     gamma = 0.20
@@ -48,6 +49,7 @@ def simulate_timesteps():
     print(average_time_i)
 
 
+# Task 1 e)
 def simulate_temporal_evolution():
     #Inner function used in calculation
     def beta_prob(infected, total):
@@ -90,8 +92,8 @@ def simulate_temporal_evolution():
     I_evolution = matrix[1]
     R_evolution = matrix[2]
     
-    print(S_evolution)
-    print(I_evolution, R_evolution)
+    #print(S_evolution)
+    #print(I_evolution, R_evolution)
 
     x_axis = list(range(0,n))
 
@@ -106,7 +108,7 @@ def simulate_temporal_evolution():
 
     plt.yticks(list(range(0, 951, 50)))
 
-    plt.xticks(list(range(0, 201, 10)))
+    plt.xticks(list(range(0, 201, 20)))
     
     # giving a title to my graph 
     plt.title("Temporal Evolution - One Realization") 
@@ -114,7 +116,7 @@ def simulate_temporal_evolution():
     plt.legend()
     
     # function to show the plot 
-    plt.show() 
+    plt.savefig("task1e_figure", bbox_inches="tight") 
 
         
 
