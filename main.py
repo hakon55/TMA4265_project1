@@ -36,8 +36,8 @@ def simulate_timesteps():
 
         counter += 1
 
-    average_time_s = mean(N_s)
-    average_time_i = mean(N_i)
+    average_time_s = np.mean(N_s)
+    average_time_i = np.mean(N_i)
 
     #print(len(N_s) + len(N_i))
     print(N_s[0:10])
@@ -87,7 +87,11 @@ def simulate_temporal_evolution():
         matrix[2].append(Y[2])
 
         counter += 1
-    
+
+    return matrix
+
+# Task 1 e continued. Plot the simulation to a graph, to show the temporal evolution through time steps
+def plot_temporal_evolution(matrix):
     S_evolution = matrix[0]
     I_evolution = matrix[1]
     R_evolution = matrix[2]
@@ -95,7 +99,7 @@ def simulate_temporal_evolution():
     #print(S_evolution)
     #print(I_evolution, R_evolution)
 
-    x_axis = list(range(0,n))
+    x_axis = list(range(0,200))
 
     plt.plot(x_axis, S_evolution, label = "S_evolution")
     plt.plot(x_axis, I_evolution, label = "I_evolution")
@@ -116,11 +120,41 @@ def simulate_temporal_evolution():
     plt.legend()
     
     # function to show the plot 
-    plt.savefig("task1e_figure", bbox_inches="tight") 
+    # plt.savefig("task1e_figure", bbox_inches="tight")
+    plt.show()
+
+
+# Based on 1000 simulations of the outbreak for 
+# time stepsn= 0,1,...,200, estimate the expected 
+# maximum number of infected individuals,E[max{I0,I1,...,I200}], 
+# and the expected time at which the number of infected individuals 
+# first takes its highest value,E[min{argmaxn≤200{In}}].
+# Task 1 f)
+def simulate_expected_max_infected():
+    n = 1000
+    #dummy_n = 2
+    counter = 0
+    I_max = []
+    I_timesteps = []
+    while counter < n:
+        matrix = simulate_temporal_evolution()
+        I_max.append(max(matrix[1]))
+        I_timesteps.append(np.argmax(matrix[1]))
+        counter += 1
+    
+    print (mean(I_max))
+    print (np.mean(I_max))
+    print ()
+    print (mean(I_timesteps))
+    print (np.mean(I_timesteps))
+
+
 
         
 
 
     
 if __name__=="__main__":
-    simulate_temporal_evolution()
+    simulate_expected_max_infected()
+    # matrix = simulate_temporal_evolution()
+    # plot_temporal_evolution(matrix)
