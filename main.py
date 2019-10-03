@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 # Task 1 d)
 def simulate_timesteps():
+    # Variables given by task
     beta = 0.05
     gamma = 0.20
     N = 1000
@@ -27,7 +28,7 @@ def simulate_timesteps():
         
         rand_prob = random.random()
 
-        while(gamma < rand_prob):
+        while gamma < rand_prob:
             time_i += 1
             rand_prob = random.random()
 
@@ -39,14 +40,15 @@ def simulate_timesteps():
     average_time_s = np.mean(N_s)
     average_time_i = np.mean(N_i)
 
-    #print(len(N_s) + len(N_i))
-    print(N_s[0:10])
-    print(N_i[10:20])
-
-    print("Average time in S: {}").format(average_time_s)
-    print(average_time_s)
-    print("Average time in I: {}").format(average_time_i)
-    print(average_time_i)
+    # print(len(N_s) + len(N_i))
+    # print(N_s[0:10])
+    # print(N_i[10:20])
+    print ("------------------------------")
+    print ("Task 1d)")
+    print ("Average time in state S: {mean}".format(mean=average_time_s))
+    # print (average_time_s)
+    print ("Average time in state I: {mean}".format(mean=average_time_i))
+    # print (average_time_i)
 
 
 # Task 1 e)
@@ -55,13 +57,13 @@ def simulate_temporal_evolution():
     def beta_prob(infected, total):
         return (0.5 * infected / total)
 
+    # Variables given by task
     gamma = 0.20
     S = 950
     I = 50
     R = 0
     total = 1000
     n = 200
-    #dummy_n = 10
     
     matrix = [[S], [I], [R]]
 
@@ -70,17 +72,13 @@ def simulate_temporal_evolution():
     counter = 1
     Y = [S, I, R]
     while counter < n:
-
+        
         new_infected = sum(np.random.binomial(1, beta_prob(Y[1], total), Y[0]))
-        #print(new_infected)
         new_recovered = sum(np.random.binomial(1, gamma, Y[1]))
-        #print(new_recovered)
-
+       
         Y[0] = matrix[0][counter-1]-new_infected
         Y[1] = matrix[1][counter-1]+new_infected-new_recovered
         Y[2] = matrix[2][counter-1]+new_recovered
-
-        #print(Y)
 
         matrix[0].append(Y[0])
         matrix[1].append(Y[1])
@@ -120,19 +118,15 @@ def plot_temporal_evolution(matrix):
     plt.legend()
     
     # function to show the plot 
-    # plt.savefig("task1e_figure", bbox_inches="tight")
-    plt.show()
+    # plt.show()
+
+    # function to save the figure as png file in current dir
+    plt.savefig("task1e_figure", bbox_inches="tight")
 
 
-# Based on 1000 simulations of the outbreak for 
-# time stepsn= 0,1,...,200, estimate the expected 
-# maximum number of infected individuals,E[max{I0,I1,...,I200}], 
-# and the expected time at which the number of infected individuals 
-# first takes its highest value,E[min{argmaxn≤200{In}}].
 # Task 1 f)
 def simulate_expected_max_infected():
     n = 1000
-    #dummy_n = 2
     counter = 0
     I_max = []
     I_timesteps = []
@@ -142,19 +136,19 @@ def simulate_expected_max_infected():
         I_timesteps.append(np.argmax(matrix[1]))
         counter += 1
     
-    print (mean(I_max))
-    print (np.mean(I_max))
-    print ()
-    print (mean(I_timesteps))
-    print (np.mean(I_timesteps))
+    print ("------------------------------")
+    print ("Task 1f)")
+    print ("Based on {n} simulations of the outbreak for {timesteps} timesteps, the calculated expected number of max infected is: {mean}\n".format(n=n, timesteps=200, mean=np.mean(I_max)))
+    # print (mean(I_max))
+    # print (np.mean(I_max))
+    print ("And based on the same simulations, the expected timestep at which the infected individuals first takes its highest value: {argmax_mean}".format(argmax_mean=np.mean(I_timesteps)))
+    # print ()
+    # print (mean(I_timesteps))
+    # print (np.mean(I_timesteps))
+   
 
-
-
-        
-
-
-    
 if __name__=="__main__":
+    simulate_timesteps()
     simulate_expected_max_infected()
-    # matrix = simulate_temporal_evolution()
-    # plot_temporal_evolution(matrix)
+    matrix = simulate_temporal_evolution()
+    plot_temporal_evolution(matrix)
