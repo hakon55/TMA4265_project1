@@ -19,6 +19,7 @@ def simulate_timesteps():
 
         time_s = 0
         time_i = 0
+        
 
         rand_prob = random.random()
 
@@ -26,11 +27,17 @@ def simulate_timesteps():
             time_s += 1
             rand_prob = random.random()
         
+        # This is the step from state S to state I
+        time_s += 1
+        
         rand_prob = random.random()
 
         while gamma < rand_prob:
             time_i += 1
             rand_prob = random.random()
+        
+        # This is the step from state I to R
+        time_i += 1
 
         N_s.append(time_s)
         N_i.append(time_i)
@@ -40,15 +47,11 @@ def simulate_timesteps():
     average_time_s = np.mean(N_s)
     average_time_i = np.mean(N_i)
 
-    # print(len(N_s) + len(N_i))
-    # print(N_s[0:10])
-    # print(N_i[10:20])
+ 
     print ("------------------------------")
     print ("Task 1d)")
     print ("Average time in state S: {mean}".format(mean=average_time_s))
-    # print (average_time_s)
     print ("Average time in state I: {mean}".format(mean=average_time_i))
-    # print (average_time_i)
 
 
 # Task 1 e)
@@ -94,8 +97,6 @@ def plot_temporal_evolution(matrix):
     I_evolution = matrix[1]
     R_evolution = matrix[2]
     
-    #print(S_evolution)
-    #print(I_evolution, R_evolution)
 
     x_axis = list(range(0,200))
 
@@ -139,12 +140,8 @@ def simulate_expected_max_infected():
     print ("------------------------------")
     print ("Task 1f)")
     print ("Based on {n} simulations of the outbreak for {timesteps} timesteps, the calculated expected number of max infected is: {mean}\n".format(n=n, timesteps=200, mean=np.mean(I_max)))
-    # print (mean(I_max))
-    # print (np.mean(I_max))
     print ("And based on the same simulations, the expected timestep at which the infected individuals first takes its highest value: {argmax_mean}".format(argmax_mean=np.mean(I_timesteps)))
-    # print ()
-    # print (mean(I_timesteps))
-    # print (np.mean(I_timesteps))
+    
    
 
 if __name__=="__main__":
